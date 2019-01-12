@@ -20,7 +20,8 @@ const UserSchema = new Schema({
     email : {
         type : String,
         required : true,
-        trim: true
+        trim: true,
+        unique: true
     },
     dob : {
         type : Date,

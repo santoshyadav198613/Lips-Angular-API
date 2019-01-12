@@ -19,9 +19,7 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
     res.send('This is get API');
 })
 
-app.listen(3000, () => {
-    const db=  MongoConnect.connect().then(()=> {
-        console.log('DB connected');
-    });
+app.listen(process.env.EXPRESS_PORT, () => {
+    const db = MongoConnect.connect();
     console.log('server running on port 3000');
 });
