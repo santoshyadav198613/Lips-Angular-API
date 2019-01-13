@@ -4,6 +4,8 @@ import { Request, Response, NextFunction } from 'express';
 import * as env from 'dotenv';
 import { MongoConnect } from './db/db';
 import { UserRoute } from './routes/user';
+import { ProductRoute } from './routes/product';
+import { auth } from './middleware/auth';
 
 env.load();
 let app = express();
@@ -16,6 +18,9 @@ app.use(bodyParser.json())
 app.set('token', process.env.JWT_SECRET);
 
 app.use('/v1/user', UserRoute);
+
+app.use('/v1/product', auth, ProductRoute);
+
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
     res.send('This is get API');
