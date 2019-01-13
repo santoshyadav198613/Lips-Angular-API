@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+app.set('token', process.env.JWT_SECRET);
+
 app.use('/v1/user', UserRoute);
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, Errback } from 'express';
 import * as bcryptJs from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
 import { User } from '../model/user';
 
 export class UserController {
@@ -8,16 +9,24 @@ export class UserController {
             if (err) {
                 next(err)
             } else {
-                if (bcryptJs.compareSync(req.body.password, result.password)) {
-                    res.json({
-                        status: 'success', message: 'Login Successful!',
-                        result: result
-                    })
-                } else {
+                if (result === null) {
                     res.json({
                         status: 'failure', message: 'User name or password is incorrect!',
                         result: {}
                     })
+                } else {
+                    if (bcryptJs.compareSync(req.body.password, result.password)) {
+                        const token = jwt.sign({ id: result._id }, req.app.get('token'), { expiresIn: '1h' })
+                        res.json({
+                            status: 'success', message: 'Login Successful!',
+                            result: token
+                        })
+                    } else {
+                        res.json({
+                            status: 'failure', message: 'User name or password is incorrect!',
+                            result: {}
+                        })
+                    }
                 }
             }
         });
