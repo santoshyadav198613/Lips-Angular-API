@@ -13,13 +13,21 @@ let app = express();
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+// app.use(function (req, res, next) {
+//     console.log(req.headers);
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "access-token,Origin, X-Requested-With, Content-Type, Accept");
+//     res.header("Access-Control-Allow-Methods","GET,POST,PUT,DELETE");
+//     next();
+// });
 
 app.set('token', process.env.JWT_SECRET);
 
-app.use('/v1/user', UserRoute);
+app.use('/api/v1/user', UserRoute);
 
-app.use('/v1/product', auth, ProductRoute);
+app.use('/api/v1/product', auth, ProductRoute);
 
 
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
