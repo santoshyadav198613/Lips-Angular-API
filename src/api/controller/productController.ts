@@ -14,4 +14,18 @@ export class ProductController {
             }
         });
     }
+
+    static addProduct(req: Request, res: Response, next: NextFunction) {
+        const product = new Product(req.body);
+        Product.create(product , (err: Errback, data:any) => {
+            if (err) {
+                next(err)
+            } else {
+                res.json({
+                    status: 'success', message: 'Product Added!',
+                    result: data
+                })
+            }
+        });
+    }
 }
