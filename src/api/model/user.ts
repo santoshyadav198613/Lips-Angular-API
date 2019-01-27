@@ -4,6 +4,29 @@ import * as bcryptJs from 'bcryptjs';
 const Schema = mongoose.Schema;
 const salt: any = process.env.SALT_ROUNDS;
 
+const AddressSchema = new Schema({
+    addressLine1: {
+        type: String,
+        required: false,
+        trim: true
+    },
+    addressLine2: {
+        type: String,
+        required: false,
+        trim: true
+    },
+    city: {
+        type: String,
+        required: false,
+        trim: true
+    },
+    pin: {
+        type: String,
+        required: false,
+        trim: true
+    }
+});
+
 const UserSchema = new Schema({
     firstName: {
         type: String,
@@ -38,7 +61,13 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         trim: true
-    }
+    },
+    mobile: {
+        type: String,
+        required: false,
+        trim: true
+    },
+    addressInfo: AddressSchema
 });
 
 

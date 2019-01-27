@@ -45,4 +45,39 @@ export class UserController {
             }
         })
     }
+
+    static getProfile(req: Request, res: Response, next: NextFunction) {
+        const userId = req.body.userId;
+        console.log(userId);
+        User.findById(userId, (err: Errback, data: any) => {
+            if (err) {
+                next(err)
+            } else {
+                console.log(data);
+                res.json({
+                    status: 'success', message: 'profile found',
+                    result: data
+                })
+            }
+        })
+    }
+
+    static updateProfile(req: Request, res: Response, next: NextFunction) {
+        const userId = req.body.userId;
+        User.findByIdAndUpdate(userId, {
+            $set: {
+                addressInfo: req.body.addressInfo,
+                mobile: req.body.mobile
+            }
+        }, (err: Errback, data: any) => {
+            if (err) {
+                next(err)
+            } else {
+                res.json({
+                    status: 'success', message: 'Profile Updated',
+                    result: data
+                })
+            }
+        })
+    }
 }
