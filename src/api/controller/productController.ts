@@ -45,4 +45,22 @@ export class ProductController {
             }
         });
     }
+
+
+    static deleteProductById(req: Request, res: Response, next: NextFunction) {
+        const productId = req.params.id;
+        Product.findByIdAndDelete(productId, (err: Errback, data: any) => {
+            if (err) {
+                res.json({
+                    status: 'failure', message: 'Product Not Found!',
+                    result: null
+                })
+            } else {
+                res.json({
+                    status: 'success', message: 'Product deleted!',
+                    result: data
+                })
+            }
+        });
+    }
 }
