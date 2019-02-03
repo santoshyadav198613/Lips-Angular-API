@@ -2,10 +2,11 @@
   "name": "lips-angualr-api",
   "version": "1.0.0",
   "description": "Angualr API",
-  "main": "index.js",
+  "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run build && nodemon ./dist/server.js",
+    "start": "node ./dist/server.js",
+    "postinstall": "npm run build",
     "build": "tsc"
   },
   "author": "",
