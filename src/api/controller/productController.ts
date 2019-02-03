@@ -63,4 +63,45 @@ export class ProductController {
             }
         });
     }
+
+    static getProductListCount(req: Request, res: Response, next: NextFunction) {
+        Product.count({}, (err: Errback, data: any) => {
+            if (err) {
+                res.json({
+                    status: 'failure', message: 'Product Not Found!',
+                    result: null
+                })
+            } else {
+                res.json({
+                    status: 'success', message: 'Product deleted!',
+                    result: data
+                })
+            }
+        });
+    }
+
+    static getProductCount(req: Request, res: Response, next: NextFunction) {
+        Product.aggregate([
+            {
+                $group: {
+                    _id: '$name',
+                    count: { $sum: 1 }
+                }
+            }
+        ], (err: Errback, data: any) => {
+            if (err) {
+                res.json({
+                    status: 'failure', message: 'Product Not Found!',
+                    result: null
+                })
+            } else {
+                res.json({
+                    status: 'success', message: 'Product deleted!',
+                    result: data
+                })
+            }
+        });
+    }
+
+
 }
