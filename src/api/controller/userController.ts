@@ -5,7 +5,7 @@ import { User } from '../model/user';
 
 export class UserController {
     static login(req: Request, res: Response, next: NextFunction) {
-        User.findOne({ email: req.body.email }, (err: Errback, result: any) => {
+        User.findOne({ email: req.body.email } , 'firstName lastName email password', (err: Errback, result: any) => {
             if (err) {
                 next(err)
             } else {
@@ -19,7 +19,7 @@ export class UserController {
                         const token = jwt.sign({ id: result._id }, req.app.get('token'), { expiresIn: '1h' })
                         res.json({
                             status: 'success', message: 'Login Successful!',
-                            result: token
+                            result: token , data : result
                         })
                     } else {
                         res.json({
