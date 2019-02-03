@@ -1,5 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import * as compression from 'compression';
+import * as helmet from 'helmet';
 import { Request, Response, NextFunction } from 'express';
 import * as env from 'dotenv';
 import { MongoConnect } from './db/db';
@@ -9,6 +11,9 @@ import { auth } from './middleware/auth';
 
 env.load();
 let app = express();
+
+app.use(compression());
+app.use(helmet());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 
